@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { CONSIGNMENT_LOAN_INTEREST_RATE, GUARANTEED_LOAN_INTEREST_RATE, PERSONAL_LOAN_INTEREST_RATE } from '../../src/constants'
 import { requestLoan, grantPersonalLoan, grantConsignmentLoan, grantGuaranteedLoan } from '../../src/services/loan.service'
-import { CustomerInfo, LoansReport } from '../../src/types'
+import { CustomerInfo } from '../../src/types'
 
 describe('services - loan', () => {
   describe('grantPersonalLoan', () => {
@@ -13,18 +13,15 @@ describe('services - loan', () => {
         income: 2000.00,
         location: 'sc'
       }
-      const availableLoans: LoansReport = {
-        customer: 'name',
-        loans: []
-      }
-      grantPersonalLoan(costumerInfo, availableLoans)
 
-      const expected = [{
+      const result = grantPersonalLoan(costumerInfo)
+
+      const expected = {
         type: 'PERSONAL',
         interest_rate: PERSONAL_LOAN_INTEREST_RATE
-      }]
+      }
 
-      expect(availableLoans.loans).toEqual(expected)
+      expect(result).toEqual(expected)
     })
 
     test('should grant an personal loan if customer income is between 3000 and 5000, is under 30 years old and lives in SP', () => {
@@ -35,18 +32,15 @@ describe('services - loan', () => {
         income: 4000.00,
         location: 'SP'
       }
-      const availableLoans: LoansReport = {
-        customer: 'name',
-        loans: []
-      }
-      grantPersonalLoan(costumerInfo, availableLoans)
 
-      const expected = [{
+      const result = grantPersonalLoan(costumerInfo)
+
+      const expected = {
         type: 'PERSONAL',
         interest_rate: PERSONAL_LOAN_INTEREST_RATE
-      }]
+      }
 
-      expect(availableLoans.loans).toEqual(expected)
+      expect(result).toEqual(expected)
     })
   })
 
@@ -59,18 +53,15 @@ describe('services - loan', () => {
         income: 5000.00,
         location: 'sc'
       }
-      const availableLoans: LoansReport = {
-        customer: 'name',
-        loans: []
-      }
-      grantConsignmentLoan(costumerInfo, availableLoans)
 
-      const expected = [{
+      const result = grantConsignmentLoan(costumerInfo)
+
+      const expected = {
         type: 'CONSIGNMENT',
         interest_rate: CONSIGNMENT_LOAN_INTEREST_RATE
-      }]
+      }
 
-      expect(availableLoans.loans).toEqual(expected)
+      expect(result).toEqual(expected)
     })
   })
 
@@ -83,18 +74,15 @@ describe('services - loan', () => {
         income: 2000.00,
         location: 'sc'
       }
-      const availableLoans: LoansReport = {
-        customer: 'name',
-        loans: []
-      }
-      grantGuaranteedLoan(costumerInfo, availableLoans)
 
-      const expected = [{
+      const result = grantGuaranteedLoan(costumerInfo)
+
+      const expected = {
         type: 'GUARANTEED',
         interest_rate: GUARANTEED_LOAN_INTEREST_RATE
-      }]
+      }
 
-      expect(availableLoans.loans).toEqual(expected)
+      expect(result).toEqual(expected)
     })
 
     test('should grant an guaranteed loan if customer income is higher than 3000', () => {
@@ -105,18 +93,15 @@ describe('services - loan', () => {
         income: 4000.00,
         location: 'sp'
       }
-      const availableLoans: LoansReport = {
-        customer: 'name',
-        loans: []
-      }
-      grantGuaranteedLoan(costumerInfo, availableLoans)
 
-      const expected = [{
+      const result = grantGuaranteedLoan(costumerInfo)
+
+      const expected = {
         type: 'GUARANTEED',
         interest_rate: GUARANTEED_LOAN_INTEREST_RATE
-      }]
+      }
 
-      expect(availableLoans.loans).toEqual(expected)
+      expect(result).toEqual(expected)
     })
   })
 
