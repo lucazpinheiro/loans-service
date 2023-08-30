@@ -6,7 +6,11 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2015",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+    }
   },
   "include": ["src"]
 }

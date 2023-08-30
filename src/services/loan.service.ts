@@ -1,47 +1,48 @@
 import { CONSIGNMENT_LOAN_INTEREST_RATE, GUARANTEED_LOAN_INTEREST_RATE, PERSONAL_LOAN_INTEREST_RATE } from '../constants'
-import { CustomerInfo, LoansReport } from '../types'
+import { CustomerInfo, LoansReport } from '@/types'
 
-export const grantPersonalLoan = (customer: CustomerInfo, availableLoans: LoansReport) => {
+export const grantPersonalLoan = (customer: CustomerInfo) => {
   if (customer.income <= 3000) {
-    availableLoans.loans.push({
+    return {
       type: 'PERSONAL',
       interest_rate: PERSONAL_LOAN_INTEREST_RATE
-    })
-    return
+    } as const
   }
 
   if (customer.income >= 3000 && customer.income <= 5000 && customer.age < 30 && customer.location.toLowerCase() === 'sp') {
-    availableLoans.loans.push({
+    return {
       type: 'PERSONAL',
       interest_rate: PERSONAL_LOAN_INTEREST_RATE
-    })
+    } as const
   }
+  return null
 }
 
-export const grantConsignmentLoan = (customer: CustomerInfo, availableLoans: LoansReport) => {
+export const grantConsignmentLoan = (customer: CustomerInfo) => {
   if (customer.income >= 5000) {
-    availableLoans.loans.push({
+    return {
       type: 'CONSIGNMENT',
       interest_rate: CONSIGNMENT_LOAN_INTEREST_RATE
-    })
+    } as const
   }
+  return null
 }
 
-export const grantGuaranteedLoan = (customer: CustomerInfo, availableLoans: LoansReport) => {
+export const grantGuaranteedLoan = (customer: CustomerInfo) => {
   if (customer.income <= 3000) {
-    availableLoans.loans.push({
+    return {
       type: 'GUARANTEED',
       interest_rate: GUARANTEED_LOAN_INTEREST_RATE
-    })
-    return
+    } as const
   }
 
   if (customer.income >= 3000 && customer.income <= 5000 && customer.age < 30 && customer.location.toLowerCase() === 'sp') {
-    availableLoans.loans.push({
+    return {
       type: 'GUARANTEED',
       interest_rate: GUARANTEED_LOAN_INTEREST_RATE
-    })
+    } as const
   }
+  return null
 }
 
 export const requestLoan = (customer: CustomerInfo): LoansReport => {
@@ -50,9 +51,20 @@ export const requestLoan = (customer: CustomerInfo): LoansReport => {
     loans: []
   }
 
-  grantPersonalLoan(customer, availableLoans)
-  grantConsignmentLoan(customer, availableLoans)
-  grantGuaranteedLoan(customer, availableLoans)
+  const personalLoan = grantPersonalLoan(customer)
+  if (personalLoan) {
+    availableLoans.loans.push(personalLoan)
+  }
+
+  const consignmentLoand = grantConsignmentLoan(customer)
+  if (consignmentLoand) {
+    availableLoans.loans.push(consignmentLoand)
+  }
+
+  const guaranteedLoan = grantGuaranteedLoan(customer)
+  if (guaranteedLoan) {
+    availableLoans.loans.push(guaranteedLoan)
+  }
 
   return availableLoans
 }

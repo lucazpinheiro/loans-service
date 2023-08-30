@@ -1,4 +1,4 @@
-import './config'
-import { start } from './app'
+import '@/config'
+import { start } from '@/app'
 
 start()

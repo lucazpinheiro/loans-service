@@ -1,10 +1,10 @@
 import express, { Express, Request, Response } from 'express'
-import { CustomerInfo } from './types'
-import services from './services'
+import { CustomerInfo } from '@/types'
+import services from '@/services'
 
 const PORT = Number(process.env.PORT) || 3000
 
-const app: Express = express()
+export const app: Express = express()
 
 app.use(express.json())
 app.use((req, res, next) => {
@@ -28,10 +28,6 @@ app.post('/loans', async (req: Request, res: Response) => {
     res.status(500).json({ msg: 'something went wrong' })
   }
 })
-
-export {
-  app
-}
 
 export const start = async () => {
   try {

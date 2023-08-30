@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { CustomerInfo } from '../types'
+import { CustomerInfo } from '@/types'
 
 export const customerSchema = z.object({
   cpf: z.string().min(11).max(15),
