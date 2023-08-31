@@ -53,16 +53,19 @@ export const requestLoan = (customer: CustomerInfo): LoansReport => {
 
   const personalLoan = grantPersonalLoan(customer)
   if (personalLoan) {
+    console.log(1)
     availableLoans.loans.push(personalLoan)
   }
 
   const consignmentLoand = grantConsignmentLoan(customer)
   if (consignmentLoand) {
+    console.log(2)
     availableLoans.loans.push(consignmentLoand)
   }
 
   const guaranteedLoan = grantGuaranteedLoan(customer)
   if (guaranteedLoan) {
+    console.log(3)
     availableLoans.loans.push(guaranteedLoan)
   }
 

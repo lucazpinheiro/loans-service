@@ -63,6 +63,20 @@ describe('services - loan', () => {
 
       expect(result).toEqual(expected)
     })
+
+    test('should return null if costumer doesn\'t has requiriments for consignment loan', () => {
+      const costumerInfo: CustomerInfo = {
+        age: 26,
+        cpf: '000.000.000-11',
+        name: 'name',
+        income: 4000.00,
+        location: 'sc'
+      }
+
+      const result = grantConsignmentLoan(costumerInfo)
+
+      expect(result).toBe(null)
+    })
   })
 
   describe('grantGuaranteedLoan', () => {
@@ -71,7 +85,7 @@ describe('services - loan', () => {
         age: 26,
         cpf: '000.000.000-11',
         name: 'name',
-        income: 2000.00,
+        income: 3000.00,
         location: 'sc'
       }
 
@@ -111,16 +125,22 @@ describe('services - loan', () => {
         age: 26,
         cpf: '000.000.000-10',
         name: 'name',
-        income: 7000.00,
+        income: 3100.00,
         location: 'SP'
       }
 
       const result = requestLoan(costumerInfo)
 
-      const expected = [{
-        type: 'CONSIGNMENT',
-        interest_rate: CONSIGNMENT_LOAN_INTEREST_RATE
-      }]
+      const expected = [
+        {
+          type: 'PERSONAL',
+          interest_rate: PERSONAL_LOAN_INTEREST_RATE
+        },
+        {
+          type: 'GUARANTEED',
+          interest_rate: GUARANTEED_LOAN_INTEREST_RATE
+        }
+      ]
 
       expect(result.loans).toEqual(expected)
     })
