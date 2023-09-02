@@ -50,21 +50,4 @@ describe('POST - /loan', () => {
     expect(response.headers['content-type']).toMatch(/json/)
     expect(response.body).toEqual(expected)
   })
-
-  test.skip('Should respond with internal error message and status', async () => {
-    const data = {
-      age: '26',
-      cpf: '275.484.389-23',
-      name: 'Vuxaywua Zukiagou',
-      income: 7000.00,
-      location: 'SP'
-    }
-
-    const expected = { msg: 'something went wrong internally' }
-
-    const response = await request(app).post('/loans').send(data)
-    expect(response.statusCode).toBe(500)
-    expect(response.headers['content-type']).toMatch(/json/)
-    expect(response.body).toEqual(expected)
-  })
 })
